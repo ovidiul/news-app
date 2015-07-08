@@ -4,7 +4,6 @@
 [main]
 ;APPLICATION_PATH is the constant defined in index.php
 application.directory=APPLICATION_PATH "/application/" 
-application.url=http://localhost/news/
 
 ;product section inherit from yaf section
 [database]

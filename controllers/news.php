@@ -1,5 +1,13 @@
 <?php
+/*
+Author: Liuta Romulus Ovidiu
+Email: info@thinkovi.com
+Version: 1.0
+For: bab.la assignment 
+*/
+
 class appController{
+    
     public static function indexAction($args = array())
     {
         $db = new DB();
@@ -33,7 +41,6 @@ class appController{
     
     public static function searchNewsAction($args = array())
     {
-        //print_r($_GET);
         $query = $_GET["query"];
         return appController::indexAction(array($query));
     }
@@ -87,7 +94,7 @@ class appController{
         $news_id = (int)$args[0];
         
         $db = new DB();
-        $post = $db->getNewsById($news_id);
+        $post = $db->loadNews($news_id);
         
         if(!$post)
               appTemplate::redirect(appTemplate::getBaseUrl());  
@@ -123,6 +130,4 @@ class appController{
        return  appTemplate::loadLayout(array("content"=>$view->output(), "title"=>"404 - No page found"));
     }
     
-    
 }
-?>

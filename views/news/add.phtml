@@ -1,6 +1,6 @@
 <h1>[@pageTitle]</h1>
 
-<form action="" method="POST" class="news-form" id="news-form">
+<form action="javascript:doPreview();" method="POST" class="news-form" id="news-form">
     <input type="hidden" name="news_id" value="[@news_id]">
     <fieldset>
     <legend>News details:</legend>
@@ -8,7 +8,7 @@
         <input type="text" name="author" id="input-author" placeholder="Author" required  value="[@input_author]" /><br>
         <input type="date" name="date" id="input-date" placeholder="Date"  value="[@input_date]" /> <input type="time" id="input-time" name="time" placeholder="Time"  value="[@input_time]" /><br />
         <textarea name="content" cols="45" rows="7" id="input-content" placeholder="Content" required >[@input_content]</textarea><br />
-        <input type="Submit" name="Submit" onclick="doPreview(); return false;"> <input type="button" value="Cancel" onclick="window.location='[@baseUrl]'">
+        <input type="Submit" name="Submit"> <input type="button" value="Cancel" onclick="window.location='[@baseUrl]'">
   </fieldset>
 </form>
 
@@ -19,7 +19,7 @@
         <h2>Submitted by <span id="author"></span> on <span id="date"></span></h2>
         <p id="content"></p>
         <p>
-            <input type="Submit" name="Submit" value="Confirm Submit" onclick="doSubmit(); return false;"> <input type="button" value="Cancel Preview" onclick="doCancel();">
+            <input type="Submit" name="Submit" value="Confirm Submit" onclick="document.getElementById('news-form').action='';doSubmit(); return false;"> <input type="button" value="Cancel Preview" onclick="doCancel();">
         </p>
     </legend>
     </fieldset>

@@ -1,4 +1,10 @@
 <?php
+/*
+Author: Liuta Romulus Ovidiu
+Email: info@thinkovi.com
+Version: 1.0
+For: bab.la assignment 
+*/
 
 class DB {
     
@@ -21,7 +27,9 @@ class DB {
         }
     }
     
-        
+    /*
+    Execute a mysql query and return result
+    */    
     public function executeQuery($query)
     {
         if(!$this->_DB)
@@ -35,15 +43,19 @@ class DB {
         return $return;
     }
     
+    /*
+    Get last inserted id
+    */
     public function getLastInsertedNewsId()
     {
         return $this->_DB->insert_id;
     }
 
-    
+    /*
+    Save news to database
+    */
     public function saveNews($news_id=0)
     {
-        //insert news into database
         $title = App::test_input($_POST["title"]);
         $content = App::test_input($_POST["content"]);
         $author = App::test_input($_POST["author"]);
@@ -66,6 +78,9 @@ class DB {
             return $this->getLastInsertedNewsId();
     }
     
+    /*
+    Get news using the filter $search
+    */
     public function getNewsByQuery($search = "")
     {
         $array = array();
@@ -84,27 +99,19 @@ class DB {
         
         return $array;
     }
-    
-    public function getNewsById($news_id = "")
-    {
-        $array = array();
-        
-        $query = "select * from posts ";
-        if($news_id)
-            $query .= " where id='".$news_id."'";
-        $query .= " order by id desc LIMIT 1";
-        
-        $result  = $this->executeQuery($query);
-        
-        return $result->fetch_array(MYSQLI_ASSOC);
-    }
-    
+
+    /*
+    Delete news post by id
+    */
     public function deleteNews($news_id)
     {
         $query = "DELETE FROM posts where id='".$news_id."'";
         return $result  = $this->executeQuery($query); 
     }
     
+    /*
+    Load news post by id
+    */
     public function loadNews($news_id)
     {
         $query = "select * from posts where id='".$news_id."'";

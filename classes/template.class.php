@@ -1,27 +1,26 @@
 <?php
+/*
+Author: Liuta Romulus Ovidiu
+Email: info@thinkovi.com
+Version: 1.0
+For: bab.la assignment 
+*/
 
 class appTemplate {
-    /**
-     * The filename of the template to load.
-     *
-     * @access protected
-     * @var string
-     */
+    
+    /*
+    The filename of the template to load from views/
+    */
     protected $file;
 
-    /**
-     * An array of values for replacing each tag on the template (the key for each value is its corresponding tag).
-     *
-     * @access protected
-     * @var array
-     */
+    /*
+    An array of values for replacing each tag on the template
+    */
     protected $values = array();
 
-    /**
-     * Creates a new Template object and sets its associated file.
-     *
-     * @param string $file the filename of the template to load
-     */
+    /*
+    Creates a new Template object and sets its associated file.
+    */
     public function __construct($file) {
         $this->file = APPLICATION_PATH .DS."views" .DS. $file;
     }
@@ -37,21 +36,16 @@ class appTemplate {
         return dirname($_SERVER['PHP_SELF']);
     }
 
-    /**
-     * Sets a value for replacing a specific tag.
-     *
-     * @param string $key the name of the tag to replace
-     * @param string $value the value to replace
-     */
+    /*
+    Sets a value for replacing a specific tag.
+    */
     public function set($key, $value) {
         $this->values[$key] = $value;
     }
 
-    /**
-     * Outputs the content of the template, replacing the keys for its respective values.
-     *
-     * @return string
-     */
+    /*
+    Outputs the content of the template, replacing the keys for its respective values.
+    */
     public function output() {
 
         if (!file_exists($this->file)) {
@@ -67,13 +61,9 @@ class appTemplate {
         return $output;
     }
 
-    /**
-     * Merges the content from an array of templates and separates it with $separator.
-     *
-     * @param array $templates an array of Template objects to merge
-     * @param string $separator the string that is used between each Template object
-     * @return string
-     */
+    /*
+    Merges the content from an array of templates and separates it with $separator.
+    */
     static public function merge($templates, $separator = "\n") {
 
         $output = "";
@@ -88,12 +78,18 @@ class appTemplate {
         return $output;
     }
     
+    /*
+    Redirect the page to $url
+    */
     public static function redirect ($url)
     {
         header("Location: $url");
         exit;
     }
     
+    /*
+    Load main layout
+    */
     public static function loadLayout($params = array())
     {
         $layout = new appTemplate("layout.phtml");
@@ -109,5 +105,3 @@ class appTemplate {
     
    
 }
-
-?>

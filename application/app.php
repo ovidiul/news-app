@@ -1,4 +1,11 @@
 <?php
+/*
+Author: Liuta Romulus Ovidiu
+Email: info@thinkovi.com
+Version: 1.0
+For: bab.la assignment 
+*/
+
 include_once(APPLICATION_PATH . DS. "controllers". DS . "news.php");
 include_once(APPLICATION_PATH . DS. "classes". DS . "template.class.php");
 include_once(APPLICATION_PATH . DS. "classes". DS . "db.class.php");
@@ -24,10 +31,8 @@ class App{
         
          if(!$action)
             $action = "noRoute";
-        
-        //echo $action;
-        //$this->$action($args);
-        echo call_user_func(array("appController", $action), $args);
+
+        return call_user_func(array("appController", $action), $args);
     }
     
     
@@ -36,24 +41,31 @@ class App{
     */
     public function handleRoute()
     {
+        if(!isset($_SERVER['REQUEST_URI']))
+            return false;
         $path = $_SERVER['REQUEST_URI'];
         $baseDir = dirname($_SERVER['SCRIPT_NAME']);
         $route = str_replace($baseDir, "", $path);
         $parts = explode("/", $route );
         $action = "";
-
-        $request = $parts[1];
-        if(sizeof($parts) < 2)
+        $request = "";
+        
+        if(isset($parts[1]))
+            $request = $parts[1];
+        if(isset($parts[2]))
             $id = $parts[2];
         
         if(isset($this->_CONFIG["route"]["/".$request])){
             $action = $this->_CONFIG["route"]["/".$request];
         }
        
-        $this->initController($action, array_slice($parts, 2));
+        return $this->initController($action, array_slice($parts, 2));
         
     }
     
+    /*
+    Doing basic input data filtering
+    */
     public static function test_input($data) {
       $data = trim($data);
       $data = stripslashes($data);
@@ -66,7 +78,7 @@ class App{
     */
     public function run()
     {
-        $this->handleRoute();
+        return $this->handleRoute();
         
     }
 }
