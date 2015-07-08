@@ -1,4 +1,4 @@
-# Simple REST news application using raw PHP 
+# Sample CRUD news app using raw PHP 
 
 ##Installation
 1. create a database and import the database.sql file
