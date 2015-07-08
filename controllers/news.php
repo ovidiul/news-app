@@ -22,10 +22,13 @@ class appController{
         
         if(is_array($news))
             foreach($news as $post){
+                if(!$post["permalink"])
+                    $post["permalink"] = $post["id"];
                 $view = new appTemplate("news/news-list.phtml");
                 $view->set("title", $post["title"]); 
                 $view->set("author", $post["author"]);
                 $view->set("news_id", $post["id"]);
+                $view->set("permalink", $post["permalink"]);
                 $view->set("date", date("M d, Y H:i", strtotime($post["created"])));
                 $list_output .= $view->output();
             }
@@ -91,10 +94,14 @@ class appController{
     
     public static function viewNewsAction($args = array())
     {
-        $news_id = (int)$args[0];
-        
         $db = new DB();
-        $post = $db->loadNews($news_id);
+        
+        $news_id = $args[0];
+        
+        if(! is_numeric ($news_id))
+            $post = $db->getNewsByPermalink($news_id);
+        else
+            $post = $db->loadNews($news_id);
         
         if(!$post)
               appTemplate::redirect(appTemplate::getBaseUrl());  

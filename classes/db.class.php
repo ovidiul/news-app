@@ -59,16 +59,18 @@ class DB {
         $title = App::test_input($_POST["title"]);
         $content = App::test_input($_POST["content"]);
         $author = App::test_input($_POST["author"]);
-
+        
+        $permalink= $this->sterilize($title).".html";
+        
         if($_POST["date"])
             $date = date("Y-m-d H:i:s",strtotime($_POST["date"]." ".$_POST["time"]));
         else
             $date= date("Y-m-d H:i:s");
 
         if(!$news_id)
-            $query = "insert into posts set title=\"".$title."\", content=\"".$content."\", author=\"".$author."\", created=\"".$date."\"; ";
+            $query = "insert into posts set permalink='".$permalink."', title=\"".$title."\", content=\"".$content."\", author=\"".$author."\", created=\"".$date."\"; ";
         else
-            $query = "update posts set title=\"".$title."\", content=\"".$content."\", author=\"".$author."\", created=\"".$date."\", updated=now() WHERE id='".$news_id."';";
+            $query = "update posts set permalink='".$permalink."', title=\"".$title."\", content=\"".$content."\", author=\"".$author."\", created=\"".$date."\", updated=now() WHERE id='".$news_id."';";
 
         $this->executeQuery($query);
         
@@ -122,5 +124,38 @@ class DB {
         
         return $row;
         
+    }
+    
+    /*
+    Get news ID from permalink
+    */
+    
+    public function getNewsByPermalink($permalink)
+    {
+        $permalink = str_replace(".html", "", $permalink);
+        $permalink = $this->sterilize($permalink).".html";
+            
+        $query = "select * from posts where permalink='".$permalink."'";
+        $result = $this->executeQuery($query);
+
+        if($result)
+            $row = $result->fetch_array();
+        
+        return $row;
+        
+    }
+    
+    private function sterilize($title)
+    {
+        $result = strtolower($title);
+        // strip all non word chars
+        $result = preg_replace('/\W/', ' ', $result);
+        // replace all white space sections with a dash
+        $result = preg_replace('/\ +/', '-', $result);
+        // trim dashes
+        $result = preg_replace('/\-$/', '', $result);
+        $result = preg_replace('/^\-/', '', $result);
+
+        return $result;
     }
 }
