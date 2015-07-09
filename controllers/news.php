@@ -113,7 +113,7 @@ class appController{
         $view->set("content", htmlspecialchars_decode($post["content"]));
         $view->set("news_id", $post["id"]);
         
-       return  appTemplate::loadLayout(array("content"=>$view->output(), "title"=>"Homepage"));
+       return  appTemplate::loadLayout(array("content"=>$view->output(), "title"=>$post["title"]));
         
     }
     
