@@ -73,9 +73,10 @@ class appController{
         
         $view = new appTemplate("news/add.phtml");
         if($news_id)
-            $view->set("pageTitle", "Edit News #".$news['id']);
+            $pageTitle = "Edit News #".$news['id'];
         else
-            $view->set("pageTitle", "Add News");
+            $pageTitle = "Add News";
+        $view->set("pageTitle", $pageTitle);
         $view->set("news_id", $news['id']);
         $view->set("input_title", $news['title']);
         $view->set("input_author", $news['author']);
@@ -84,7 +85,7 @@ class appController{
         $view->set("input_content", $news['content']);
         
         
-        return appTemplate::loadLayout(array("content"=>$view->output(), "title"=>"Add News"));
+        return appTemplate::loadLayout(array("content"=>$view->output(), "title"=>$pageTitle));
     }
     
     public static function updateNewsAction($args = array())
