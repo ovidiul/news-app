@@ -38,7 +38,7 @@ class appController{
         $view->set("content", $list_output);
         
         
-       return  appTemplate::loadLayout(array("content"=>$view->output(), "title"=>"Homepage", "query"=>$query));
+       return  appTemplate::loadLayout(array("content"=>$view->output(), "title"=>"Homepage", "query"=>stripslashes($query)));
           
     }
     
