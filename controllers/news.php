@@ -14,7 +14,7 @@ class appController{
         
         $query = "";
         if(isset($args[0]))
-            $query = App::test_input($args[0]);
+            $query = App::test_input(strip_tags($args[0]));
         
         $news = $db->getNewsByQuery($query);
         
