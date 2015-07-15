@@ -93,7 +93,7 @@ class DB {
         if($search)
             $query .= " where title like '%".$search."%' or content like '%".$search."%' or author like '%".$search."%'";
 
-        $query .= " order by id desc";
+        $query .= " order by created desc";
         
         $result  = $this->executeQuery($query);
         
@@ -118,7 +118,7 @@ class DB {
     */
     public function loadNews($news_id)
     {
-        $query = "select * from posts where id='".$news_id."'";
+        $query = "select * from posts where id='".$news_id."' order by id desc";
         $result = $this->executeQuery($query);
 
         if($result)
