@@ -67,9 +67,9 @@ class appController{
         {
             $news_id = $db->saveNews($news_id);
             
-            if($update_news)
+            /*if($update_news)
                 appTemplate::redirect(appTemplate::getBaseUrl() . "/edit/".$news_id);
-            else
+            else*/
                 appTemplate::redirect(appTemplate::getBaseUrl());
         }
         

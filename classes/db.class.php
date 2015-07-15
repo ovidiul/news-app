@@ -69,12 +69,18 @@ class DB {
         else
             $date= date("Y-m-d H:i:s");
 
-        if(!$news_id)
+        if(!$news_id){
             $query = "insert into posts set permalink='".$permalink."', title=\"".$title."\", content=\"".$content."\", author=\"".$author."\", created=\"".$date."\"; ";
-        else
+            $msg = "News has been added successfully!";
+        }
+        else{
             $query = "update posts set permalink='".$permalink."', title=\"".$title."\", content=\"".$content."\", author=\"".$author."\", created=\"".$date."\", updated=now() WHERE id='".$news_id."';";
+            $msg = "News has been updated successsfully!";
+        }
 
         $this->executeQuery($query);
+        
+        $_SESSION['msg']  = $msg;
         
         if($news_id)
             return $news_id;

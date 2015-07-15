@@ -57,7 +57,7 @@ body {
     clear:both;
     max-width:1160px;
     margin: auto;
-    padding: 0 10px 10px 20px;
+    /*padding: 0 10px 10px 20px;*/
 }
 
 .menu ul li {
@@ -126,4 +126,12 @@ ul.news-list li{
 a {
   text-decoration: none;  
 }
-    
+
+.extra {
+    margin-top: 15px;
+    padding: 10px;
+    background-color: #eee;
+    font-size: 15px;
+    color: red;
+    font-weight: bold;
+}

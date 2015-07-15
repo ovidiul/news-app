@@ -94,6 +94,14 @@ class appTemplate {
     {
         $layout = new appTemplate("layout.phtml");
         
+        if(isset($_SESSION['msg']))
+        {
+            $layout->set("message", $_SESSION['msg']);
+            $layout->set("message_class", "extra");
+            unset($_SESSION['msg']);
+        }
+        
+        
         if(is_array($params))
         foreach($params as $key=>$value)
             $layout->set($key, $value);
