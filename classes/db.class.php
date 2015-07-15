@@ -62,7 +62,7 @@ class DB {
         
         $permalink= $this->sterilize($title).".html";
         
-        $permalink = $this->validatePermalink($permalink);
+        $permalink = $this->validatePermalink($permalink, $news_id);
         
         if($_POST["date"])
             $date = date("Y-m-d H:i:s",strtotime($_POST["date"]." ".$_POST["time"]));
@@ -161,17 +161,17 @@ class DB {
         return $result;
     }
     
-    private function validatePermalink($permalink)
+    private function validatePermalink($permalink, $news_id = 0)
     {
-        $query = "select count(*) from posts where permalink='".$permalink."'";
-         $result = $this->executeQuery($query);
+        $query = "select count(*) from posts where permalink='".$permalink."' and id!='".$news_id."'";
+        $result = $this->executeQuery($query);
 
         if($result)
             $row = $result->fetch_row();
         
-        if($row[0]){
+        if($row[0] > 0){
             $permalink = ($row[0]+1)."_".$permalink;
-            return $this->validatePermalink($permalink);
+            return $this->validatePermalink($permalink, $news_id);
         }
         
         return($permalink);
