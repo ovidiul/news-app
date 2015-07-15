@@ -48,7 +48,7 @@ class appController{
         return appController::indexAction(array($query));
     }
     
-    public static function addNewsAction($args = array())
+    public static function addNewsAction($args = array(), $update_news=0)
     {
         $db = new DB();
         $news = array("title"=>"","author"=>"","date"=>"","time"=>"","content"=>"", "updated"=>"", "id"=>"");
@@ -66,9 +66,11 @@ class appController{
         if($_SERVER['REQUEST_METHOD'] == "POST")
         {
             $news_id = $db->saveNews($news_id);
-                
-            appTemplate::redirect(appTemplate::getBaseUrl() . "/edit/".$news_id);
             
+            if($update_news)
+                appTemplate::redirect(appTemplate::getBaseUrl() . "/edit/".$news_id);
+            else
+                appTemplate::redirect(appTemplate::getBaseUrl());
         }
         
         $view = new appTemplate("news/add.phtml");
@@ -90,7 +92,7 @@ class appController{
     
     public static function updateNewsAction($args = array())
     {
-        return appController::addNewsAction($args);
+        return appController::addNewsAction($args, 1);
     }
     
     public static function viewNewsAction($args = array())
